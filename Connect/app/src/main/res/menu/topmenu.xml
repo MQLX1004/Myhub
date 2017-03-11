@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:title="查找"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/addmenu"
+        android:icon="@drawable/ic_action_name"
+        android:title="添加"
+        app:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/clear"
+          android:title="清除搜索记录"
+          app:showAsAction="never"/>
+</menu>

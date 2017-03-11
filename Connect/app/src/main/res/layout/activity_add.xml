@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/addName"
+        android:hint="姓名"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"/>
+    <EditText
+        android:id="@+id/addTel"
+        android:hint="联系方式"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <Button
+            android:id="@+id/noAdd"
+            android:text="取消"
+            android:layout_margin="10dp"
+            android:background="#D0CF49"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/yesAdd"
+            android:text="确定"
+            android:layout_margin="10dp"
+            android:background="#D0CF49"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</LinearLayout>
