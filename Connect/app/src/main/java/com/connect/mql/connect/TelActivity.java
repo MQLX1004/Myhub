@@ -83,11 +83,9 @@ public class TelActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==TELREQUEST){
             if(resultCode==RESULT_OK){
-                SQLiteDatabase db=ListActivity.dbHelper.getWritableDatabase();
-                db.delete("book","tel=?",new String[]{stel});
                 finish();
             }else if(resultCode==RESULT_CANCELED){
-                finish();
+                //finish();
             }
         }
     }

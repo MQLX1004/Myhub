@@ -3,8 +3,6 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:padding="5dp"
-              android:layout_marginTop="2dp"
-              android:layout_marginBottom="2dp"
               android:background="#FFFBF0"
               android:layout_height="60dp"
               style="?android:listSeparatorTextViewStyle"
@@ -16,7 +14,7 @@
             android:textSize="25sp"
             android:textColor="#040202"
             android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"/>
         <TextView
             android:id="@+id/tel"
