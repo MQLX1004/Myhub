@@ -18,7 +18,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Editable;
 import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
+    private static final String TAG = "ListActivity";
     public static final String CONTENT_NAME="ListActivity_name";
     public static final String CONTENT_TEL="ListActivity_tel";
     public static ConnectDbhelp dbHelper;
@@ -44,7 +48,7 @@ public class ListActivity extends AppCompatActivity {
     private ConnectAdapter mAdapter;
     private List<String> names;
     private List<String> tels;
-    private SearchView mSearchView;
+    private EditText etInput;
 
 
     @Override
@@ -57,17 +61,6 @@ public class ListActivity extends AppCompatActivity {
 
         mRecycleView=(RecyclerView)findViewById(R.id.ConnectList);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));//设置布局管理器
-//        mRecycleView.addItemDecoration(new RecycleViewDecoration(this, new RecycleViewDecoration.DecorationCallback() {
-//            @Override
-//            public long getGroupId(int position) {
-//                return Character.toUpperCase();
-//            }
-//
-//            @Override
-//            public String getGroupFirstLine(int position) {
-//                return null;
-//            }
-//        }));//添加ItemDecoration
 
         mAdapter=new ConnectAdapter();
         mRecycleView.setAdapter(mAdapter);
@@ -75,7 +68,35 @@ public class ListActivity extends AppCompatActivity {
         names=new ArrayList<>();
         tels=new ArrayList<>();
 
+        etInput=(EditText)findViewById(R.id.searchview);
+        etInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                initdata();
+                for (int x = 0; x<names.size(); x++){
+                    String item=names.get(x);
+                    if(!(item.contains(charSequence.toString()))){
+                        names.remove(item);
+                        tels.remove(tels.get(x));
+                        x--;
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                Log.d(TAG, "onTextChanged: "+charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
+
     //此类从数据库获取数据
     private void initdata(){
         if(names!=null){
@@ -95,7 +116,7 @@ public class ListActivity extends AppCompatActivity {
         cursor.close();
     }
     class ConnectAdapter extends RecyclerView.Adapter<ConnectAdapter.MyViewHolder>{
-        //此类绑定item视图
+
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MyViewHolder holder=new MyViewHolder(LayoutInflater.from(ListActivity.this).inflate(
@@ -113,6 +134,7 @@ public class ListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
             return names.size();
         }
         //此类用来具体部署item
@@ -125,7 +147,6 @@ public class ListActivity extends AppCompatActivity {
                 tel=(TextView)itemView.findViewById(R.id.tel);
                 itemView.setOnClickListener(this);//实现item的点击效果
             }
-
             @Override
             public void onClick(View view) {//实现item的点击事件
                 Intent intent=new Intent(ListActivity.this,TelActivity.class);//显式Intent
@@ -142,20 +163,13 @@ public class ListActivity extends AppCompatActivity {
         initdata();
         mAdapter.notifyDataSetChanged();//更新RecycleView
     }
+
     //部署菜单
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater =getMenuInflater();
         inflater.inflate(R.menu.topmenu,menu);//绑定工具栏菜单
-
-        final MenuItem item=menu.findItem(R.id.search);
-        mSearchView=(SearchView) MenuItemCompat.getActionView(item);//获取SearchView
-        mSearchView.setSubmitButtonEnabled(true);
-        SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        SearchableInfo info=searchManager.getSearchableInfo(getComponentName());
-        mSearchView.setSearchableInfo(info);
-
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
     //实现菜单的点击事件
     @Override
@@ -165,98 +179,5 @@ public class ListActivity extends AppCompatActivity {
             startActivity(intent);//开始此意图
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //此类设置item的高级样式ItemDecoration
-    public static class RecycleViewDecoration extends RecyclerView.ItemDecoration{
-
-        private int dividerHeight;//item间距大小
-        private Paint dividerpaint;//绘制item
-        private DecorationCallback mCallback;//回调接口实例
-        private Paint paint;//绘制组头
-        private TextPaint mTextPaint;//绘制字体
-        private int topGap;
-        private Paint.FontMetrics mFontMetrics;//字体属性
-
-        public RecycleViewDecoration(Context context,DecorationCallback decorationCallback){
-            Resources res=context.getResources();
-            this.mCallback=decorationCallback;
-            //设置组头属性
-            paint=new Paint();
-            paint.setColor(res.getColor(R.color.colorAccent));
-            //设置组头字体属性
-            mTextPaint=new TextPaint();
-            mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
-            mTextPaint.setAntiAlias(true);
-            mTextPaint.setTextSize(80);
-            mTextPaint.setColor(Color.BLACK);
-            mTextPaint.setTextAlign(Paint.Align.LEFT);
-            mTextPaint.getFontMetrics(mFontMetrics);
-            mFontMetrics=new Paint.FontMetrics();
-            topGap=res.getDimensionPixelSize(R.dimen.sectioned_top);
-            //设置item间距属性
-            dividerpaint=new Paint();
-            dividerpaint.setColor(res.getColor(R.color.colorAccent));
-            dividerHeight=context.getResources().getDimensionPixelSize(R.dimen.divider_height);
-        }
-        //设置item的上下左右距离（margin）
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            outRect.bottom=dividerHeight;
-
-            int pos=parent.getChildAdapterPosition(view);
-            long groupId=mCallback.getGroupId(pos);
-            if(groupId<0) return;
-            if(pos==0||isFirstInGroup(pos)){
-                outRect.top=topGap;
-            }else{
-                outRect.top=0;
-            }
-        }
-        private boolean isFirstInGroup(int pos){
-            if(pos==0){
-                return true;
-            }else{
-                long prevGroupId=mCallback.getGroupId(pos-1);
-                long groupId=mCallback.getGroupId(pos);
-                return prevGroupId!=groupId;
-            }
-        }
-        //绘制上下左右距离
-        @Override
-        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            super.onDraw(c,parent,state);
-
-            int childCount=parent.getChildCount();
-            int left=parent.getPaddingLeft();
-            int right=parent.getWidth()-parent.getPaddingRight();
-
-            for(int i=0;i<childCount-1;i++){
-                View view=parent.getChildAt(i);
-                float top=view.getBottom();
-                float bottom=view.getBottom()+dividerHeight;
-                c.drawRect(left,top,right,bottom,dividerpaint);
-            }
-            for(int j=0;j<childCount;j++){
-                View view=parent.getChildAt(j);
-                int position=parent.getChildAdapterPosition(view);
-                long groupId=mCallback.getGroupId(position);
-                if(groupId<0) return;
-                String textline=mCallback.getGroupFirstLine(position).toUpperCase();
-                if(position==0||isFirstInGroup(position)){
-                    float mtop=view.getTop()-topGap;
-                    float bottom=view.getTop();
-                    c.drawRect(left,mtop,right,bottom,paint);//绘制红色矩形
-                    c.drawText(textline,left,bottom,mTextPaint);//绘制文本
-                }
-            }
-        }
-        public interface DecorationCallback{
-            long getGroupId(int position);
-            String getGroupFirstLine(int position);
-        }
     }
 }
