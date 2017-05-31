@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.datebase.mql.connect.ConnectDbhelp;
 
 public class AddActivity extends AppCompatActivity {
+    private static final String TAG = "AddActivity";
     private EditText name;
     private EditText tel;
     private Button yes;
@@ -43,7 +44,6 @@ public class AddActivity extends AppCompatActivity {
             tel.setText(stel);
         }
 
-
         xname=name.getText().toString();
         xtel=tel.getText().toString();
         yes=(Button)findViewById(R.id.yesAdd);
@@ -66,16 +66,18 @@ public class AddActivity extends AppCompatActivity {
                 }else{
                     SQLiteDatabase db=ListActivity.dbHelper.getWritableDatabase();
                     if(intent.getSerializableExtra(TelActivity.TELACTIVITY_NAME)!=null){
-                        db.execSQL("UPDATE book SET NAME= '"+tname+"', "+"TEL = '"+ttel+"' WHERE NAME = '"+xname+"' AND TEL = '"+xtel+"';");
+                        db.execSQL("UPDATE "+Group_adapt.name+" SET NAME= '"+tname+"', "+"letter='"+PinYin.getPinYinFirstLetter(tname)
+                                +"',"+"TEL = '"+ttel+"' WHERE NAME = '"+xname+"' AND TEL = '"+xtel+"';");
                     }
                     else if(intent.getSerializableExtra(TelActivity.TELACTIVITY_NAME)==null){
+                        Log.d(TAG, "onClick: "+PinYin.getPinYinFirstLetter(tname));
                         //向数据库插入数据
                         ContentValues values=new ContentValues();
                         values.put("name",tname);
+                        values.put("letter",PinYin.getPinYinFirstLetter(tname));
                         values.put("tel",ttel);
-                        db.insert("book",null,values);
+                        db.insert(Group_adapt.name,null,values);
                     }
-
                 }
                 //向父Activity返回数据
                 Intent intent=new Intent();

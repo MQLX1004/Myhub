@@ -1,20 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/searchview"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:imeOptions="actionSearch"
-        android:hint="请输入关键字"/>
-    <android.support.v7.widget.RecyclerView
+
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@id/searchview"
-        android:id="@+id/ConnectList"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/listToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"/>
+        <FrameLayout
+            android:id="@+id/searchlayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:layout_alignParentTop="true">
+            <EditText
+                android:id="@+id/searchview"
+                android:textColor="#000000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/sreach_bg"
+                android:imeOptions="actionSearch"
+                android:hint="搜索"/>
+            <ImageView
+                android:id="@+id/search_delete"
+                android:background="@drawable/ic_action_delete"
+                android:layout_gravity="right"
+                android:layout_width="30dp"
+                android:layout_margin="5dp"
+                android:layout_height="30dp"
+                android:visibility="gone"/>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_below="@id/searchlayout"
+                        android:id="@+id/ConnectList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </android.support.v7.widget.RecyclerView>
+                    <!--
+                    悬浮按钮FloatingActionButton
+                    -->
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginRight="36dp"
+                        android:layout_margin="16dp"
+                        android:src="@drawable/ic_action_add"
+                        android:elevation="8dp"/>
+                </FrameLayout>
+                <com.connect.mql.connect.LetterIndexView
+                    android:id="@+id/letterbar"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/show_letter_in_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/voip_toast_bg"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:visibility="gone"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+        <TextView
+            android:text="我的群组"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+        <TextView
+            android:id="@+id/morenqunzu"
+            android:text="默认群组"
+            android:background="@null"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/group_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp">
+        </android.support.v7.widget.RecyclerView>
+        <Button
+            android:id="@+id/creategroup"
+            android:text="创建群组"
+            android:background="#E53424"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
+

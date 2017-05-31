@@ -7,6 +7,6 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/change"
-        android:title="更改"
+        android:title="编辑"
         app:showAsAction="never"/>
 </menu>

@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.connect.mql.connect">
+
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/appicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListActivity">
+        <activity
+            android:name=".ListActivity"
+            android:theme="@style/notitle">
+
+        </activity>
+        <activity
+            android:name=".AddActivity"
+            android:theme="@style/notitle">
+        </activity>
+        <activity
+            android:name=".TelActivity"
+            android:parentActivityName=".ListActivity"
+            android:theme="@style/notitle">
+        </activity>
+        <activity
+            android:name=".HuanyingActivity"
+            android:theme="@style/fulscr">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"
-                  android:parentActivityName=".ListActivity">
-
-        </activity>
-        <activity android:name=".TelActivity"
-                  android:parentActivityName=".ListActivity">
-
+        <activity android:name=".Create_group"
+                  android:theme="@style/notitle">
         </activity>
     </application>
 

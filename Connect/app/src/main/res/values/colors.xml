@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#33ccff</color>
+    <color name="colorPrimaryDark">#66ccff</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="ToolTextColor">#FFFFFF</color>
+    <color name="tx_btm">#9DE569</color>
+    <color name="letter">#06000000</color>
 </resources>

@@ -3,9 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#D0A61A</item>
-        <item name="colorPrimaryDark">#D0A61A</item>
+        <item name="colorPrimary">#33ccff</item>
+        <item name="colorPrimaryDark">#33ccff</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="notitle" parent="AppTheme">
+        <item name="colorControlNormal">@color/tx_btm</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+    </style>
+    <style name="fulscr" parent="notitle">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

@@ -4,35 +4,44 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/addName"
-        android:hint="姓名"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"/>
-    <EditText
-        android:id="@+id/addTel"
-        android:hint="联系方式"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize">
         <Button
             android:id="@+id/noAdd"
             android:text="取消"
-            android:layout_margin="10dp"
-            android:background="#D0CF49"
+            android:textSize="18sp"
+            android:background="@null"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <Button
             android:id="@+id/yesAdd"
-            android:text="确定"
-            android:layout_margin="10dp"
-            android:background="#D0CF49"
+            android:text="保存"
+            android:textSize="18sp"
+            android:background="@null"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
     </LinearLayout>
+    <EditText
+        android:id="@+id/addName"
+        android:hint="姓名"
+        android:textColor="#000000"
+        android:textColorHint="#9DE569"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="60dp"/>
+    <EditText
+        android:id="@+id/addTel"
+        android:hint="联系方式"
+        android:textColor="#000000"
+        android:textColorHint="#9DE569"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 </LinearLayout>
