@@ -24,6 +24,7 @@ import java.util.List;
  */
 
 public class HttpUtil {
+    private static final String TAG = "HttpUtil";
     private static List<String> names;
     private static List<Bitmap> images;
     public static void sendHttpRequest(final String address,final HttpCallback listener) {
@@ -53,9 +54,10 @@ public class HttpUtil {
                     }
                     try{
                         JSONArray jsonArray=new JSONArray(response.toString());
+                        Log.d(TAG, "run: "+response.toString());
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject=jsonArray.getJSONObject(i);
-                            names.add(jsonObject.getString("name"));
+                            names.add(jsonObject.getString("jiage"));
                             images.add(getbitmap(jsonObject.getString("image")));
                         }
                     }catch (Exception e){

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dao.UserDao">
+    <insert id="add" parameterType="Vo.User">
+        INSERT into lanou (name,phone,address,type,id)VALUES (#{name},#{phone},#{address},#{type},#{id})
+    </insert>
+    <select id="list" resultType="Vo.User">
+        SELECT * FROM lanou
+    </select>
+    <select id="countall" resultType="long">
+        SELECT count(*) FROM lanou
+    </select>
+    <select id="pagelist" parameterType="Po.FrontQuery" resultType="Vo.User">
+        SELECT * FROM lanou LIMIT #{start},#{pageSize}
+    </select>
+    <select id="searchbyid" parameterType="String" resultType="Vo.User">
+        SELECT * from lanou WHERE id=#{id}
+    </select>
+    <update id="update" parameterType="Vo.User">
+        UPDATE lanou SET id=#{id},name=#{name},phone=#{phone},address=#{address},type=#{type} WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM lanou where id=#{id}
+    </delete>
+</mapper>

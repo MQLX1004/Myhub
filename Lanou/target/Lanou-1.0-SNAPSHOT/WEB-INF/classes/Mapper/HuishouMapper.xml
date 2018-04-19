@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dao.HuishouDao">
+    <insert id="add" parameterType="Vo.Huishou">
+        INSERT into huishouyuan (name,phone,id,status,lzdate)VALUES (#{name},#{phone},#{id},#{status},#{lzdate})
+    </insert>
+    <select id="list" resultType="Vo.Huishou">
+        SELECT * FROM huishouyuan
+    </select>
+    <select id="countall" resultType="long">
+        SELECT count(*) FROM huishouyuan
+    </select>
+    <select id="pagelist" parameterType="Po.FrontQuery" resultType="Vo.Huishou">
+        SELECT * FROM huishouyuan LIMIT #{start},#{pageSize}
+    </select>
+    <select id="searchbyid" parameterType="String" resultType="Vo.Huishou">
+        SELECT * from huishouyuan WHERE id=#{id}
+    </select>
+    <update id="update" parameterType="Vo.Huishou">
+        UPDATE huishouyuan SET id=#{id},name=#{name},phone=#{phone},status=#{status},lzdate=#{lzdate} WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM huishouyuan WHERE id=#{id}
+    </delete>
+</mapper>

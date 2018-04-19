@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dao.FinishDao">
+    <insert id="add" parameterType="Vo.Finish">
+        INSERT into finish (name,phone,id,address,type,finishdate,huishouid,huishouname,huishouphone)VALUES (#{name},#{phone},#{id},#{address},#{type},#{finishdate},#{huishouid},#{huishouname},#{huishouphone})
+    </insert>
+    <select id="pagelist" parameterType="Po.FrontQuery" resultType="Vo.Finish">
+        SELECT * FROM finish LIMIT #{start},#{pageSize}
+    </select>
+    <select id="list" resultType="Vo.Finish">
+        SELECT * FROM finish
+    </select>
+    <select id="listbyhsid" resultType="Vo.Finish">
+        SELECT * FROM finish where huishouid=#{huishouid}
+    </select>
+    <select id="countbyhs" parameterType="String" resultType="java.lang.Integer">
+        select count(*) from finish where huishouid=#{huishouid}
+    </select>
+    <select id="countall" resultType="long">
+        SELECT COUNT(*) FROM finish
+    </select>
+    <update id="update" parameterType="Vo.Finish">
+        UPDATE finish SET id=#{id},name=#{name},phone=#{phone},address=#{address},type=#{type},
+         huishouid=#{huishouid},finishdate=#{finishdate},huishouname=#{huishouname},huishouphone=#{huishouphone} WHERE id=#{id}
+    </update>
+</mapper>

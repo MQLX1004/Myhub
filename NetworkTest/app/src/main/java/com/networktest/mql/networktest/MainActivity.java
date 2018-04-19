@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
                     List<Bitmap> images=lists.get(1);
                     mTextView1.setText(names.get(0));
                     mImageView1.setImageBitmap(images.get(0));
-                    mTextView2.setText(names.get(1));
-                    mImageView2.setImageBitmap(images.get(1));
+                    mTextView2.setText(names.get(0));
+                    mImageView2.setImageBitmap(images.get(0));
                     break;
             }
         }
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void sendrequset(){
-        HttpUtil.sendHttpRequest("http://10.0.2.2:8080/android/Json.json", new HttpCallback() {//调用网络请求静态类并重写接口中的方法
+        HttpUtil.sendHttpRequest("http://123.207.165.232:8080/mengqinglu_war_exploded/getTestJson", new HttpCallback() {//调用网络请求静态类并重写接口中的方法
             @Override
             public void onFinish(List<String> names, List<Bitmap> images) {
                 Message message=new Message();

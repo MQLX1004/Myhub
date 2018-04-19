@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+  <!--配置datasource-->
+  <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" abstract="true">-->
+  <!--<property name="location" value="classpath:db.properties"/>-->
+  <!--</bean>-->
+  <context:component-scan base-package="Service" />
+  <bean id="datasource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/lou?characterEncoding=utf8&amp;useSSL=true"/>
+    <property name="username" value="root"/>
+    <property name="password" value="root"/>
+  </bean>
+  <!--配置工厂-->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="datasource"/>
+    <!--自动扫描mapper文件-->
+    <property name="mapperLocations" value="classpath:Mapper/*.xml"/>
+  </bean>
+  <!--自动扫描Dao层-->
+  <bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="Dao"/>
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+  </bean>
+  <!-- 事务管理 -->
+  <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="datasource"/>
+  </bean>
+  <tx:annotation-driven transaction-manager="transactionManager"/>
+  <!--自定义realm-->
+  <bean id="myrealm" class="Realm.Myrealm"></bean>
+  <!--安全管理器-->
+  <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    <property name="realm" ref="myrealm"/>
+  </bean>
+  <!--shiro过滤器，shiro.ini交给spring来代理-->
+  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <!--shiro的核心安全接口，这个属性是必须的-->
+    <property name="securityManager" ref="securityManager"/>
+    <!--身份认证失败则跳转到登陆页面的配置-->
+    <property name="loginUrl" value="/tologin"/>
+    <!--shiro连接约束配置，及过滤链的定义-->
+    <property name="filterChainDefinitions">
+      <value>
+        /tologin=anon
+        /login=anon
+        /main=authc
+      </value>
+    </property>
+  </bean>
+  <!--开启shiro注解-->
+  <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+  <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    <property name="securityManager" ref="securityManager"/>
+  </bean>
+</beans>
